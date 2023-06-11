@@ -1,0 +1,180 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dZ:/Documents/HDL/Quartus_Projects/FinalProject/simulation/modelsim
+Eclock_divider
+Z1 w1668090253
+Z2 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+R0
+Z5 8Z:/Documents/HDL/Quartus_Projects/FinalProject/clock_divider.vhd
+Z6 FZ:/Documents/HDL/Quartus_Projects/FinalProject/clock_divider.vhd
+l0
+L25
+VT5c<BH>J<7:n2_EGW[7SX1
+!s100 O<32QT;f:aWO^0efG4Knd0
+Z7 OV;C;10.5b;63
+33
+Z8 !s110 1668090754
+!i10b 1
+Z9 !s108 1668090754.000000
+Z10 !s90 -reportprogress|300|-2008|-work|work|Z:/Documents/HDL/Quartus_Projects/FinalProject/clock_divider.vhd|
+Z11 !s107 Z:/Documents/HDL/Quartus_Projects/FinalProject/clock_divider.vhd|
+!i113 1
+Z12 o-2008 -work work
+Z13 tExplicit 1 CvgOpt 0
+Abehavioral
+R2
+R3
+R4
+DEx4 work 13 clock_divider 0 22 T5c<BH>J<7:n2_EGW[7SX1
+l40
+L34
+V1^;VbP_lZ_7;@i=jXXY<l3
+!s100 JzS_H58YdA?1RbE;dQ?m`1
+R7
+33
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+R13
+Efinalproject_trivia_de10
+Z14 w1668090399
+Z15 DPx4 ieee 9 math_real 0 22 Sk6CSihbPL<f[^Shm]=KX0
+R2
+R3
+R4
+R0
+Z16 8Z:/Documents/HDL/Quartus_Projects/FinalProject/FinalProject_Trivia_DE10.vhd
+Z17 FZ:/Documents/HDL/Quartus_Projects/FinalProject/FinalProject_Trivia_DE10.vhd
+l0
+L25
+VB_8S<7YJf@PSzmK664Ydh3
+!s100 c5gWI>1ScbJMb3eh^QI381
+R7
+33
+R8
+!i10b 1
+R9
+Z18 !s90 -reportprogress|300|-2008|-work|work|Z:/Documents/HDL/Quartus_Projects/FinalProject/FinalProject_Trivia_DE10.vhd|
+Z19 !s107 Z:/Documents/HDL/Quartus_Projects/FinalProject/FinalProject_Trivia_DE10.vhd|
+!i113 1
+R12
+R13
+Abehavioral
+R15
+R2
+R3
+R4
+DEx4 work 24 finalproject_trivia_de10 0 22 B_8S<7YJf@PSzmK664Ydh3
+l105
+L51
+VHbbVTY@8c_DMMD4lYJQdc1
+!s100 ^cHlX`km8E<QhLIO0G12c3
+R7
+33
+R8
+!i10b 1
+R9
+R18
+R19
+!i113 1
+R12
+R13
+Efinalproject_trivia_fsm
+Z20 w1667588730
+R15
+R2
+R3
+R4
+R0
+Z21 8Z:/Documents/HDL/Quartus_Projects/FinalProject/FinalProject_Trivia_FSM.vhd
+Z22 FZ:/Documents/HDL/Quartus_Projects/FinalProject/FinalProject_Trivia_FSM.vhd
+l0
+L25
+VX9Y1iMG5hg]TPm23m@JBF0
+!s100 PIiUzJkTcN@Nb^;:jM6mg1
+R7
+33
+R8
+!i10b 1
+R9
+Z23 !s90 -reportprogress|300|-2008|-work|work|Z:/Documents/HDL/Quartus_Projects/FinalProject/FinalProject_Trivia_FSM.vhd|
+Z24 !s107 Z:/Documents/HDL/Quartus_Projects/FinalProject/FinalProject_Trivia_FSM.vhd|
+!i113 1
+R12
+R13
+Abehavioral
+R15
+R2
+R3
+R4
+DEx4 work 23 finalproject_trivia_fsm 0 22 X9Y1iMG5hg]TPm23m@JBF0
+l47
+L34
+VWbI5CKFC4R8WH13bn8oW50
+!s100 nzc4:EC;h[R7GgCE_WLRg0
+R7
+33
+R8
+!i10b 1
+R9
+R23
+R24
+!i113 1
+R12
+R13
+Efinalproject_trivia_fsm_tb
+Z25 w1667585221
+R15
+R2
+R3
+R4
+R0
+Z26 8Z:/Documents/HDL/Quartus_Projects/FinalProject/FinalProject_Trivia_FSM_tb.vhd
+Z27 FZ:/Documents/HDL/Quartus_Projects/FinalProject/FinalProject_Trivia_FSM_tb.vhd
+l0
+L21
+VTJ;fjOVaJbWRB<_S;VK3_3
+!s100 aPhL3@CI`AdUeXonf03nW3
+R7
+33
+R8
+!i10b 1
+R9
+Z28 !s90 -reportprogress|300|-2008|-work|work|Z:/Documents/HDL/Quartus_Projects/FinalProject/FinalProject_Trivia_FSM_tb.vhd|
+Z29 !s107 Z:/Documents/HDL/Quartus_Projects/FinalProject/FinalProject_Trivia_FSM_tb.vhd|
+!i113 1
+R12
+R13
+Atb
+R15
+R2
+R3
+R4
+DEx4 work 26 finalproject_trivia_fsm_tb 0 22 TJ;fjOVaJbWRB<_S;VK3_3
+l41
+L24
+V]Ad<__KVOQB]KY<S91imZ3
+!s100 `lai:RmCUV4]JJUa`Z6RF2
+R7
+33
+R8
+!i10b 1
+R9
+R28
+R29
+!i113 1
+R12
+R13

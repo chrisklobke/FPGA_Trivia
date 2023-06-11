@@ -1,0 +1,100 @@
+--------------------------------------
+----lab2_elevator_tb.vhdl
+--
+--created 9/27/2022
+--Chris Klobke
+--
+--rev 0
+--------------------------------------
+--
+--Testbench for lab2_elevator.vhdl
+--Task for lab 2
+--
+--
+--------------------------------------
+
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
+USE ieee.math_real.all;
+
+entity lab2_elevator_tb is
+	generic(
+		NUM_FLOORS_TB:		natural := 60;
+		DELAY_CNT_TB:		natural := 5
+	);
+end entity;
+
+architecture tb of lab2_elevator_tb is
+	signal CLK:					std_logic;
+	signal RSTB:				std_logic;
+	signal DESIRED_FLOOR:	std_logic_vector((integer(ceil(log2(real(NUM_FLOORS_TB)))) - 1) downto 0);
+	signal CURRENT_FLOOR:	std_logic_vector((integer(ceil(log2(real(NUM_FLOORS_TB)))) - 1) downto 0);
+	signal O_DESIRED_FLOOR:	std_logic_vector((integer(ceil(log2(real(NUM_FLOORS_TB)))) - 1) downto 0);
+	signal LED:					std_logic;
+	
+	constant PER:				time := 20 ns;	
+	
+	component lab2_elevator is
+		generic (
+			NUM_FLOORS:			natural := 60;
+			DELAY_CNT:			natural := 5
+		);
+		port (
+			i_clk:				in std_logic;
+			i_rstb:				in std_logic;
+			i_desired_floor:	in std_logic_vector((integer(ceil(log2(real(NUM_FLOORS)))) - 1) downto 0);
+			
+			o_desired_floor:	out std_logic_vector((integer(ceil(log2(real(NUM_FLOORS)))) - 1) downto 0);
+			o_current_floor:	out std_logic_vector((integer(ceil(log2(real(NUM_FLOORS)))) - 1) downto 0);
+			o_led:				out std_logic
+		);	
+	end component;
+
+begin
+
+	DUT : lab2_elevator
+	generic map(
+		NUM_FLOORS => NUM_FLOORS_TB,
+		DELAY_CNT => DELAY_CNT_TB
+	)
+	port map (
+		i_clk => CLK,
+		i_rstb => RSTB,
+		i_desired_floor => DESIRED_FLOOR,
+		o_current_floor => CURRENT_FLOOR,
+		o_desired_floor => O_DESIRED_FLOOR,
+		o_led => LED
+	);
+	
+	Clock : process 
+	begin
+		CLK <= '0';
+		wait for PER/2;
+		infinite: loop
+			CLK <= not CLK;
+			wait for PER/2;
+		end loop;
+	end process;
+	
+	RST: process
+	begin
+		RSTB <= '0';
+		wait for 2*PER;
+		RSTB <= '1';
+		wait;
+	end process;
+	
+	process
+	begin
+		DESIRED_FLOOR <= std_logic_vector(to_unsigned(8, integer(ceil(log2(real(NUM_FLOORS_TB))))));
+		wait for 20*PER;
+		DESIRED_FLOOR <= std_logic_vector(to_unsigned(64, integer(ceil(log2(real(NUM_FLOORS_TB))))));
+		wait for 5*PER;
+		DESIRED_FLOOR <= std_logic_vector(to_unsigned(24, integer(ceil(log2(real(NUM_FLOORS_TB))))));
+		wait for 23*PER;
+		DESIRED_FLOOR <= std_logic_vector(to_unsigned(67, integer(ceil(log2(real(NUM_FLOORS_TB))))));
+		wait;
+	end process;
+	
+end architecture; 

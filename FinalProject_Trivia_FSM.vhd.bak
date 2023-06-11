@@ -1,0 +1,169 @@
+--------------------------------------
+----FinalProject_Trivia_FSM.vhdl
+--
+--created 10/27/2022
+--Tom Rettke, Henning Patte, Chris Klobke
+--
+--rev 0
+--------------------------------------
+--
+--FSM for state of level for trivia
+--
+--Task for final Project
+--
+---------------------------------------
+--
+--Inputs: CLK, SW
+--Output: LEDR
+--
+--------------------------------------
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
+USE ieee.math_real.all;
+
+entity lab2_elevator is
+	generic (
+		NUM_FLOORS:			natural := 60;
+		DELAY_CNT:			natural := 5
+	);
+	port (
+		i_clk:				in std_logic;
+		i_rstb:				in std_logic;
+		i_desired_floor:	in std_logic_vector((integer(ceil(log2(real(NUM_FLOORS)))) - 1) downto 0);
+		
+		o_desired_floor:	out std_logic_vector((integer(ceil(log2(real(NUM_FLOORS)))) - 1) downto 0);
+		o_current_floor:	out std_logic_vector((integer(ceil(log2(real(NUM_FLOORS)))) - 1) downto 0);
+		o_led:				out std_logic
+	);
+end entity;
+
+architecture behavioral of lab2_elevator is
+type state_type is			(state_hold, state_up, state_down, state_idle, state_return);
+
+signal s_desired_floor:			unsigned((integer(ceil(log2(real(NUM_FLOORS)))) - 1) downto 0);
+signal s_current_floor:			unsigned((integer(ceil(log2(real(NUM_FLOORS)))) - 1) downto 0);
+signal s_current_floor_next:	unsigned((integer(ceil(log2(real(NUM_FLOORS)))) - 1) downto 0);
+signal cnt:							unsigned((integer(ceil(log2(real(DELAY_CNT)))) - 1) downto 0);
+signal cnt_next:					unsigned((integer(ceil(log2(real(DELAY_CNT)))) - 1) downto 0);
+signal s_led:						std_logic;
+signal state_next:				state_type;
+signal state:						state_type;
+
+
+begin
+	process(all)
+	begin
+		if (unsigned(i_desired_floor) <= 1) then
+			s_desired_floor <= to_unsigned(1, integer(ceil(log2(real(NUM_FLOORS)))));
+		elsif (unsigned(i_desired_floor) <= to_unsigned(NUM_FLOORS, integer(ceil(log2(real(NUM_FLOORS)))))) then
+			s_desired_floor <= unsigned(i_desired_floor);
+		else
+			s_desired_floor <= to_unsigned(NUM_FLOORS, integer(ceil(ceil(log2(real(NUM_FLOORS))))));
+		end if;
+	end process;
+
+	NSL: process(all)
+	begin
+		case state is
+			when state_idle =>
+				s_current_floor_next <= s_current_floor;
+				cnt_next <= cnt;
+				if (s_desired_floor > s_current_floor) then
+					state_next <= state_up;
+				else
+					state_next <= state_idle;
+				end if;
+				
+			when state_up =>
+				if (s_desired_floor = s_current_floor) then
+					s_current_floor_next <= s_current_floor;
+					cnt_next <= to_unsigned(DELAY_CNT - 3, integer(ceil(log2(real(DELAY_CNT)))));
+					state_next <= state_hold;
+				elsif (s_desired_floor < s_current_floor) then
+					s_current_floor_next <= s_current_floor - 1;
+					cnt_next <= cnt;
+					state_next <= state_down;
+				else
+					s_current_floor_next <= s_current_floor + 1;
+					cnt_next <= cnt;
+					state_next <= state_up;
+				end if;
+			
+			when state_down =>
+				if (s_desired_floor = s_current_floor) then
+					s_current_floor_next <= s_current_floor;
+					cnt_next <= to_unsigned(DELAY_CNT - 3, integer(ceil(log2(real(DELAY_CNT)))));
+					state_next <= state_hold;
+				elsif (s_desired_floor < s_current_floor) then
+					s_current_floor_next <= s_current_floor - 1;
+					cnt_next <= cnt;
+					state_next <= state_down;
+				else
+					s_current_floor_next <= s_current_floor + 1;
+					cnt_next <= cnt;
+					state_next <= state_up;
+				end if;
+				
+			when state_hold =>
+				if (s_desired_floor = s_current_floor and cnt > 0) then
+					s_current_floor_next <= s_current_floor;
+					cnt_next <= cnt - 1;
+					state_next <= state_hold;
+				elsif (s_desired_floor < s_current_floor) then
+					s_current_floor_next <= s_current_floor - 1;
+					cnt_next <= cnt;
+					state_next <= state_down;
+				elsif (s_desired_floor > s_current_floor) then
+					s_current_floor_next <= s_current_floor + 1;
+					cnt_next <= cnt;
+					state_next <= state_up;
+				else
+					s_current_floor_next <= s_current_floor;
+					cnt_next <= cnt;
+					state_next <= state_return;
+				end if;
+				
+			when state_return =>
+				cnt_next <= cnt;
+				if (s_current_floor = 1) then
+					s_current_floor_next <= s_current_floor;
+					state_next <= state_idle;
+				else
+					s_current_floor_next <= s_current_floor - 1;
+					state_next <= state_return;
+				end if;	
+			
+			when others =>
+				s_current_floor_next <= s_current_floor;
+				cnt_next <= cnt;
+				state_next <= state_idle;
+			end case;
+	end process;
+	
+	process(i_clk, i_rstb)
+	begin
+		if (i_rstb = '0') then
+			state <= state_idle;
+			s_current_floor <= to_unsigned(1, integer(ceil(log2(real(NUM_FLOORS)))));
+		elsif (rising_edge(i_clk)) then
+			state <= state_next;
+			s_current_floor <= s_current_floor_next;
+			cnt <= cnt_next;
+		end if;
+	end process;
+
+	
+	process(all)
+	begin
+		if (s_desired_floor = s_current_floor) then
+			s_led <= '1';
+		else
+			s_led <= '0';
+		end if;
+	end process;
+
+	o_desired_floor <= std_logic_vector(s_desired_floor);
+	o_current_floor <= std_logic_vector(s_current_floor);
+	o_led <= s_led;	
+end architecture;
